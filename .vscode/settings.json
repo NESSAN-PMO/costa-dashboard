@@ -1,0 +1,11 @@
+{
+    "python.pythonPath": "/Users/fockez/anaconda3/envs/django/bin/python",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "db",
+            "database": "${workspaceFolder:material-dashboard-django}/db.sqlite3"
+        }
+    ]
+}

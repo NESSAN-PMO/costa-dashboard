@@ -1,0 +1,98 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Telescopes</h4>
+                  <p class="card-category"> Telescope status list</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Heartbeat
+                        </th>
+                        <th>
+                          Current Plan
+                        </th>
+                        <th>
+                          Mount Status
+                        </th>
+                        <th>
+                          RA
+                        </th>
+                        <th>
+                          Dec
+                        </th>
+                        <th>
+                          Az
+                        </th>
+                        <th>
+                          Alt
+                        </th>
+                        <th>
+                          Target RA
+                        </th>
+                        <th>
+                          Target Dec
+                        </th>
+                        <th>
+                            Filter
+                        </th>
+                        <th>
+                            Camera Temperature
+                        </th>
+                        <th>
+                            Camera Cooler Power
+                        </th>
+                        <th>
+                            Camera Status
+                        </th>
+                        <th>
+                            Run Level
+                        </th>
+                        <th>
+                            Free Space
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1
+                          </td>
+                          <td>
+                            Dakota Rice
+                          </td>
+                          <td>
+                            Niger
+                          </td>
+                          <td>
+                            Oud-Turnhout
+                          </td>
+                          <td class="text-primary">
+                            $36,738
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

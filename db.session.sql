@@ -1,0 +1,1 @@
+update auth_user set is_superuser = 1 where id = 1;
