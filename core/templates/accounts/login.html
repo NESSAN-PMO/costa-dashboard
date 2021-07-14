@@ -12,7 +12,7 @@
       <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">
-            Login
+            登录
           </h4>
         </div>
         <div class="card-body">
@@ -21,7 +21,7 @@
               {% if msg %}
                 <span class="text-danger">{{ msg | safe }}</span>
               {% else %}
-                  Add your credentials
+                  登录信息
               {% endif %}  
           </h6>
           
@@ -34,7 +34,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Username</label>
+                  <label>用户名</label>
+                  <br/>
                   {{ form.username }}
                 </div>
               </div>
@@ -45,7 +46,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label class="bmd-label-floating">Password</label>
+                  <label>密码</label>
+                  </br>
                   {{ form.password }}
                 </div>
               </div>
@@ -53,11 +55,12 @@
 
             <br />
 
-            <button type="submit" name="login" class="btn btn-primary pull-left">Login</button>
+            <button type="submit" name="login" class="btn btn-primary pull-left">登录</button>
 
             &nbsp; &nbsp; 
             <span class="pull-right">
-              Don't have an account? <a href="{% url 'register' %}" class="text-primary">Create</a>
+              <br/>
+              没有账号? <a href="{% url 'register' %}" class="text-primary">创建</a>
             </span>
 
             <div class="clearfix"></div>
