@@ -8,16 +8,16 @@
   {% if user.is_authenticated %}
   <div class="sidebar-wrapper">
     <ul class="nav">
-      <li class="nav-item {% if 'ui-telescopes' == segment %} active {% endif %}">
-        <a class="nav-link" href="/ui-telescopes.html">
-          <i class="material-icons">content_paste</i>
-          <p>Telescopes</p>
-        </a>
-      </li>
       <li class="nav-item {% if 'index' == segment %} active {% endif %}">
         <a class="nav-link" href="/">
           <i class="material-icons">dashboard</i>
           <p>Dashboard</p>
+        </a>
+      </li>
+      <li class="nav-item {% if 'ui-telescopes' == segment %} active {% endif %}">
+        <a class="nav-link" href="/telescopes.html">
+          <i class="material-icons">content_paste</i>
+          <p>Telescopes</p>
         </a>
       </li>
       <li class="nav-item {% if 'page-user' in segment %} active {% endif %}">
