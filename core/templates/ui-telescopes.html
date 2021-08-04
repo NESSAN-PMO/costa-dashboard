@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Tables {% endblock %}
+{% block title %} Telescope Status View {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -67,34 +67,34 @@
                   {{ tel.id }}
                 </td>
                 <td  class="text-primary">
-                  {{ tel.heartbeat }}
+                  {{ tel.tmdiff }}
                 </td>
                 <td>
                   {{ tel.plan_name }}
                 </td>
                 <td  class="text-primary">
-                  {{ tel.mount_status }}
+                  <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.mount_info }}">{{ tel.mount_status }}</a>
                 </td>
                 <td  class="text-primary">
-                  {{ tel.cam_status }}
+                  <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.cam_info }}">{{ tel.cam_status }}</a>
                 </td>
                 <td>
                   {{ tel.run_level }}
                 </td>
                 <td>
-                  {{ tel.free_space }}
+                  {{ tel.free_space|floatformat:-2 }}GB
                 </td>
                 <td>
-                  {{ tel.ra }}
+                  {{ tel.ra|floatformat:-3 }}h
                 </td>
                 <td>
-                  {{ tel.dec }}
+                  {{ tel.dec|floatformat:-3 }}d
                 </td>
                 <td>
-                  {{ tel.target_ra }}
+                  {{ tel.target_ra|floatformat:-3 }}h
                 </td>
                 <td>
-                  {{ tel.target_dec }}
+                  {{ tel.target_dec|floatformat:-3 }}d
                 </td>
                 <td>
                   {{ tel.filter }}
@@ -103,7 +103,7 @@
                   {{ tel.ccd_temp }}
                 </td>
                 <td>
-                  {{ tel.cooling_power }}
+                  {{ tel.cooling_power }}%
                 </td>
               </tr>
               {% endfor %}

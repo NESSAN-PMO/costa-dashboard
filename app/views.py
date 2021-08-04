@@ -9,6 +9,8 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 from .models import Status, Logs
+from datetime import datetime
+import json
 
 
 @login_required(login_url="/login/")
@@ -25,7 +27,11 @@ def index(request):
 def telescopes(request):
     context = {}
     context['segment'] = 'telescopes'
-    context['tels'] = Status.objects.using('sensors').all()
+    context['tels'] = Status.objects.using('sensors').all().values()
+    for t in context['tels']:
+        t['tmdiff'] = (datetime.utcnow() - t['heartbeat']).seconds
+        t['cam_info'] = json.dumps(t['cam_info'], indent=2)
+        t['mount_info'] = json.dumps(t['mount_info'], indent=2)
     html_template = loader.get_template('ui-telescopes.html')
     return HttpResponse(html_template.render(context, request))
 
