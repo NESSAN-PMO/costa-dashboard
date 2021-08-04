@@ -30,16 +30,19 @@
                 Mount Status
               </th>
               <th>
+                Camera Status
+              </th>
+              <th>
+                Run Level
+              </th>
+              <th>
+                Free Space
+              </th>
+              <th>
                 RA
               </th>
               <th>
                 Dec
-              </th>
-              <th>
-                Az
-              </th>
-              <th>
-                Alt
               </th>
               <th>
                 Target RA
@@ -56,15 +59,6 @@
               <th>
                 Camera Cooler Power
               </th>
-              <th>
-                Camera Status
-              </th>
-              <th>
-                Run Level
-              </th>
-              <th>
-                Free Space
-              </th>
             </thead>
             <tbody>
               {% for tel in tels %}
@@ -72,17 +66,44 @@
                 <td>
                   {{ tel.id }}
                 </td>
-                <td>
-                  Dakota Rice
+                <td  class="text-primary">
+                  {{ tel.heartbeat }}
                 </td>
                 <td>
-                  Niger
+                  {{ tel.plan_name }}
+                </td>
+                <td  class="text-primary">
+                  {{ tel.mount_status }}
+                </td>
+                <td  class="text-primary">
+                  {{ tel.cam_status }}
                 </td>
                 <td>
-                  Oud-Turnhout
+                  {{ tel.run_level }}
                 </td>
-                <td class="text-primary">
-                  $36,738
+                <td>
+                  {{ tel.free_space }}
+                </td>
+                <td>
+                  {{ tel.ra }}
+                </td>
+                <td>
+                  {{ tel.dec }}
+                </td>
+                <td>
+                  {{ tel.target_ra }}
+                </td>
+                <td>
+                  {{ tel.target_dec }}
+                </td>
+                <td>
+                  {{ tel.filter }}
+                </td>
+                <td>
+                  {{ tel.ccd_temp }}
+                </td>
+                <td>
+                  {{ tel.cooling_power }}
                 </td>
               </tr>
               {% endfor %}
