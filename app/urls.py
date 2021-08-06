@@ -12,6 +12,8 @@ urlpatterns = [
     path('', views.index, name='home'),
 
     path('telescopes.html', views.telescopes, name='telescopes'),
+    path('plans.html', views.plans, name='plans'),
+    path('logs.html', views.logs, name='logs'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

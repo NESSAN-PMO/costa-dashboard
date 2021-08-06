@@ -1,0 +1,62 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">System Logs</h4>
+        <p class="card-category">Observation system logs</p>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                Source
+              </th>
+              <th>
+                Time
+              </th>
+              <th>
+                Level
+              </th>
+              <th>
+                Message
+              </th>
+            </thead>
+            <tbody>
+              {% for log in logs %}
+              <tr>
+                <td>
+                  {{ log.source }}
+                </td>
+                <td>
+                  {{ log.timestamp|date:"Y-m-d H:i:s" }}
+                </td>
+                <td>
+                  {{ log.level }}
+                </td>
+                <td>
+                  {{ log.message }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
