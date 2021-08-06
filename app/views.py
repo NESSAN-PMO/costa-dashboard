@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django import template
 from .models import Status, Logs
 from datetime import datetime
@@ -32,6 +32,10 @@ def telescopes(request):
         t['tmdiff'] = (datetime.utcnow() - t['heartbeat']).seconds
         t['cam_info'] = json.dumps(t['cam_info'], indent=2)
         t['mount_info'] = json.dumps(t['mount_info'], indent=2)
+    if request.is_ajax():
+        data = {'rendered_table': loader.get_template(
+            'status_table.html').render(context, request)}
+        return JsonResponse(data)
     html_template = loader.get_template('ui-telescopes.html')
     return HttpResponse(html_template.render(context, request))
 
