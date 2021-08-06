@@ -130,7 +130,8 @@
                 success: function (data) {
                     $("#statusTable").html("");
                     console.log("success");
-                    $('#statusTable').html(eval("("+data.rendered_table+")"));
+                    const rdata=JSON.parse(data);
+                    $('#statusTable').html(rdata.rendered_table);
                 },
                 error: function (data) {
                     alert("Got an error dude " + data);
