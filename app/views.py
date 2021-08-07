@@ -32,10 +32,14 @@ def telescopes(request):
         t['tmdiff'] = (datetime.utcnow() - t['heartbeat']).seconds
         t['cam_info'] = json.dumps(t['cam_info'], indent=2)
         t['mount_info'] = json.dumps(t['mount_info'], indent=2)
+
+
     if request.is_ajax():
         data = {'rendered_table': loader.get_template(
             'status_table.html').render(context, request)}
         return JsonResponse(data)
+
+
     html_template = loader.get_template('ui-telescopes.html')
     return HttpResponse(html_template.render(context, request))
 

@@ -63,46 +63,53 @@
             <tbody>
               {% for tel in tels %}
               <tr>
-                <td>
+                <td align="center">
                   {{ tel.id }}
                 </td>
-                <td  class="text-primary">
+                <td  class="text-primary" align="center">
                   {{ tel.tmdiff }}
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.plan_name }}
                 </td>
-                <td  class="text-primary">
+                <td  class="text-primary" align="center">
                   <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.mount_info }}">{{ tel.mount_status }}</a>
                 </td>
-                <td  class="text-primary">
+                <td  class="text-primary" align="center">
                   <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.cam_info }}">{{ tel.cam_status }}</a>
                 </td>
-                <td>
-                  {{ tel.run_level }}
+                <td align="center">
+                  <select id="run_level" style="width: 50px">
+                      <option value="0"> 0 </option>
+                      <option value="1"> 1 </option>
+                      <option value="1"> 2 </option>
+                      <option value="1"> 3 </option>
+                      <option value="1"> 4 </option>
+                      <option value="1"> 5 </option>
+                  </select>
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.free_space|floatformat:-2 }}GB
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.ra|floatformat:-3 }}h
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.dec|floatformat:-3 }}d
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.target_ra|floatformat:-3 }}h
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.target_dec|floatformat:-3 }}d
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.filter }}
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.ccd_temp }}
                 </td>
-                <td>
+                <td align="center">
                   {{ tel.cooling_power }}%
                 </td>
               </tr>
