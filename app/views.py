@@ -8,6 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from django import template
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Status, Plans, Logs
 from datetime import datetime
 import json
@@ -54,8 +55,12 @@ def plans(request):
 def logs(request):
     context = {}
     context['segment'] = 'logs'
-    context['logs'] = Logs.objects.using(
-        'sensors').all().order_by('-timestamp').values()
+    logs = Logs.objects.using('sensors').filter(
+        timestamp__gte=datetime.utcnow().date()).order_by('-timestamp').values()
+    logs_paginator = Paginator(logs, 10)
+    page = request.GET.get('page')
+    logs_p = logs_paginator.get_page(page)
+    context['logs'] = logs_p
     html_template = loader.get_template('ui-logs.html')
     return HttpResponse(html_template.render(context, request))
 
