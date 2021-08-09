@@ -8,7 +8,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse, JsonResponse
 from django import template
-from .models import Status, Logs
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .models import Status, Plans, Logs
 from datetime import datetime
 import json
 
@@ -27,7 +28,8 @@ def index(request):
 def telescopes(request):
     context = {}
     context['segment'] = 'telescopes'
-    context['tels'] = Status.objects.using('sensors').all().values()
+    context['tels'] = Status.objects.using(
+        'sensors').order_by('id').all().values()
     for t in context['tels']:
         t['tmdiff'] = (datetime.utcnow() - t['heartbeat']).seconds
         t['cam_info'] = json.dumps(t['cam_info'], indent=2)
@@ -41,6 +43,29 @@ def telescopes(request):
 
 
     html_template = loader.get_template('ui-telescopes.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def plans(request):
+    context = {}
+    context['segment'] = 'plans'
+    context['plans'] = Plans.objects.using('sensors').all().values()
+    html_template = loader.get_template('ui-plans.html')
+    return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def logs(request):
+    context = {}
+    context['segment'] = 'logs'
+    logs = Logs.objects.using('sensors').filter(
+        timestamp__gte=datetime.utcnow().date()).order_by('-timestamp').values()
+    logs_paginator = Paginator(logs, 10)
+    page = request.GET.get('page')
+    logs_p = logs_paginator.get_page(page)
+    context['logs'] = logs_p
+    html_template = loader.get_template('ui-logs.html')
     return HttpResponse(html_template.render(context, request))
 
 

@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">System Logs</h4>
+        <p class="card-category">Observation system logs</p>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+        {% if logs %}
+          <table class="table" id="logs">
+            <thead class=" text-primary">
+              <th>Source</th>
+              <th>Time</th>
+              <th>Level</th>
+              <th>Position</th>
+              <th>Message</th>
+            </thead>
+            <tbody>
+              {% for log in logs %}
+              <tr>
+                <td>{{ log.source }}</td>
+                <td>{{ log.timestamp|date:"Y-m-d H:i:s" }}</td>
+                <td>{{ log.level }}</td>
+                <td>{{ log.position }}</td>
+                <td>{{ log.message }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <div class="pagination">
+              <span class="step-links">
+                  {% if logs.has_previous %}
+                      <a href="?page=1">&laquo; first</a>
+                      <a href="?page={{ logs.previous_page_number }}">previous</a>
+                  {% endif %}
+
+                  <span class="current">
+                      Page {{ logs.number }} of {{ logs.paginator.num_pages }}.
+                  </span>
+
+                  {% if logs.has_next %}
+                      <a href="?page={{ logs.next_page_number }}">next</a>
+                      <a href="?page={{ logs.paginator.num_pages }}">last &raquo;</a>
+                  {% endif %}
+              </span>
+          </div>
+
+        {% else %}
+          <p>No logs !!!</p>
+        {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

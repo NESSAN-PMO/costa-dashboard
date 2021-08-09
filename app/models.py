@@ -81,7 +81,8 @@ class Images(models.Model):
 class Logs(models.Model):
     id = models.IntegerField(primary_key=True)
     timestamp = models.DateTimeField(blank=True, null=True)
-    source = models.CharField(max_length=30, blank=True, null=True)
+    source = models.CharField(max_length=10, blank=True, null=True)
+    position = models.CharField(max_length=30, blank=True, null=True)
     level = models.CharField(max_length=10, blank=True, null=True)
     message = models.CharField(max_length=200, blank=True, null=True)
 
