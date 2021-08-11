@@ -1,0 +1,90 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Equipment</h4>
+                  <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Name
+                        </th>
+                        <th>
+                          Station
+                        </th>
+                        <th>
+                          Country
+                        </th>
+                        <th>
+                          Operation
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            7924
+                          </td>
+                          <td>
+                            South Africa
+                          </td>
+                          <td>
+                            South Africa
+                          </td>
+                          <td>
+                            South Africa？
+                          </td>
+                          <td>
+                             <button onclick = on()>
+                               ON
+                             </button>
+                             <button onclick = off()>
+                               OFF
+                             </button>
+                          </td>
+                          <td id = "status">
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+ <script>
+   var on = function(){
+               var x=document.getElementById("status");
+               x.innerText="ON";
+            }
+
+   var off = function(){
+               var x=document.getElementById("status");
+               x.innerText="OFF";
+            }
+ </script>
+{% endblock javascripts %}

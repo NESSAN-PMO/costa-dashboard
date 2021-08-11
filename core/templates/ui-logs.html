@@ -3,7 +3,10 @@
 {% block title %} UI Tables {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link type="text/css" href="static/assets/css/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+<link type="text/css" href="static/assets/css/jquery-ui-timepicker-addon.css" rel="stylesheet" />
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -13,6 +16,18 @@
       <div class="card-header card-header-primary">
         <h4 class="card-title ">System Logs</h4>
         <p class="card-category">Observation system logs</p>
+        <br/>
+        <p> &ensp;Start Time <input type="text" name="datetime" class="ui_timepicker" value="">
+            &ensp;End Time <input type="text" name="datetime" class="ui_timepicker" value="">
+            &ensp;ID
+            <select id="tel_id" style="width: 100px">
+                      <option value="0"> 7101 </option>
+                      <option value="1"> 7902 </option>
+                      <option value="1"> 7921 </option>
+            </select>
+            &ensp;
+            <button> Search </button>
+        </p>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -67,4 +82,23 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script type="text/javascript" src="static/assets/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="static/assets/js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="static/assets/js/jquery-ui-timepicker-addon.js"></script>
+<!--<script type="text/javascript" src="static/assets/js/jquery-ui-timepicker-zh-CN.js"></script>-->
+<script type="text/javascript">
+$(function () {
+    $(".ui_timepicker").datetimepicker({
+        //showOn: "button",
+        //buttonImage: "./static/assets/css/images/icon_calendar.gif",
+        //buttonImageOnly: true,
+        //showSecond: true,
+        //timeFormat: 'hh:mm:ss',
+        //stepHour: 1,
+        //stepMinute: 1,
+        //stepSecond: 1
+    })
+})
+</script>
+{% endblock javascripts %}
