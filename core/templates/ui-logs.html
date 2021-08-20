@@ -4,7 +4,8 @@
 
 <!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}
-<link type="text/css" href="static/assets/css/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+<link type="text/css" href="static/assets/css/jquery-ui-1.8.17.custom.css" rel="stylesheet"
+      xmlns="http://www.w3.org/1999/html"/>
 <link type="text/css" href="static/assets/css/jquery-ui-timepicker-addon.css" rel="stylesheet" />
 {% endblock stylesheets %}
 
@@ -17,17 +18,20 @@
         <h4 class="card-title ">System Logs</h4>
         <p class="card-category">Observation system logs</p>
         <br/>
-        <p> &ensp;Start Time <input type="text" name="datetime" class="ui_timepicker" value="">
-            &ensp;End Time <input type="text" name="datetime" class="ui_timepicker" value="">
+          <form method="POST" action="">
+            {%csrf_token%}
+            &ensp;Start Time <input id = "start_time" type="text" name="start_time" class="ui_timepicker" value={{start_time}}>
+            &ensp;End Time <input id = "end_time" type="text" name="end_time" class="ui_timepicker" value={{end_time}}>
             &ensp;ID
-            <select id="tel_id" style="width: 100px">
-                      <option value="0"> 7101 </option>
-                      <option value="1"> 7902 </option>
-                      <option value="1"> 7921 </option>
-            </select>
-            &ensp;
-            <button> Search </button>
-        </p>
+                <select id="tel_id" name="tel_id" style="width: 100px">
+                          <option value = 'ALL' selected> ALL </option>
+                          <option value = '7101'> 7101 </option>
+                          <option value = '7902'> 7902 </option>
+                          <option value = '7921'> 7921 </option>
+                </select>
+              <input type="hidden" name="tel_id_value" value={{tel_id}} />
+              <button type="submit">Search</button>
+          </form>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -52,11 +56,15 @@
               {% endfor %}
             </tbody>
           </table>
-          <div class="pagination">
+
+        {% else %}
+          <p>No logs !!!</p>
+        {% endif %}
+              <div class="pagination">
               <span class="step-links">
                   {% if logs.has_previous %}
-                      <a href="?page=1">&laquo; first</a>
-                      <a href="?page={{ logs.previous_page_number }}">previous</a>
+                      <a href="?page=1&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">&laquo; first</a>
+                      <a href="?page={{ logs.previous_page_number }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">previous</a>
                   {% endif %}
 
                   <span class="current">
@@ -64,19 +72,16 @@
                   </span>
 
                   {% if logs.has_next %}
-                      <a href="?page={{ logs.next_page_number }}">next</a>
-                      <a href="?page={{ logs.paginator.num_pages }}">last &raquo;</a>
+                      <a href="?page={{ logs.next_page_number }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">next</a>
+                      <a href="?page={{ logs.paginator.num_pages }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">last &raquo;</a>
                   {% endif %}
-              </span>
-          </div>
 
-        {% else %}
-          <p>No logs !!!</p>
-        {% endif %}
-        </div>
-      </div>
+              </span>
+              </div>
+          </div>
     </div>
   </div>
+</div>
 </div>
 
 {% endblock content %}
@@ -101,4 +106,30 @@ $(function () {
     })
 })
 </script>
+
+<!--
+<script type="text/javascript">
+        $(function(){
+         $('#submit').on('click', function(){
+             var tel_id = $("#tel_id").val()
+             var start_time = $("#start_time").val()
+             var end_time = $("#end_time").val()
+
+             $.ajax({
+                 cache: false,
+                 type: "POST",
+                 url:"/app/views.py",
+                 data:{'tel_id': tel_id,'start_time':start_time,'end_time':end_time},
+                 dataType:"json",
+                 async: true,
+                 beforeSend:function(xhr, settings){
+                 xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+             },
+             });
+         });
+     })
+</script>
+-->
+<script language="javascript">document.forms[0].tel_id.value = document.forms[0].tel_id_value.value;</script>
+
 {% endblock javascripts %}
