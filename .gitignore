@@ -28,3 +28,4 @@ staticfiles/*
 core/settings.py
 .vscode
 .idea
+app/migrations/*.py
