@@ -38,25 +38,61 @@ def telescopes(request):
         t['cam_info'] = json.dumps(t['cam_info'], indent=2)
         t['mount_info'] = json.dumps(t['mount_info'], indent=2)
 
-
+    #print(context['tels'])
     if request.is_ajax():
         data = {'rendered_table': loader.get_template(
             'status_table.html').render(context, request)}
         return JsonResponse(data)
 
+    post_ids = request.POST.getlist("checkOne")
 
-    html_template = loader.get_template('ui-telescopes.html')
-    return HttpResponse(html_template.render(context, request))
+    post_runlevel = request.POST.get('runlevel', '')
+    if post_runlevel == '':
+        post_runlevel = request.GET.get('runlevel', '')
 
+    for post_id in post_ids:
+       Status.objects.using('sensors').filter(id=post_id).update(run_level=post_runlevel)
+
+    #html_template = loader.get_template('ui-telescopes.html')
+    #return HttpResponse(html_template.render(context, request))
+    return render(request, 'ui-telescopes.html', context)
 
 @login_required(login_url="/login/")
 def plans(request):
     context = {}
     context['segment'] = 'plans'
     context['plans'] = Plans.objects.using('sensors').all().values()
-    html_template = loader.get_template('ui-plans.html')
-    return HttpResponse(html_template.render(context, request))
+    #html_template = loader.get_template('ui-plans.html')
+    #print(context['plans'])
 
+    post_id = len(context['plans']) + 1
+    post_name = request.POST.get('name', '')
+    if post_name == '':
+        post_name = request.GET.get('name', '')
+    post_mode = request.POST.get('mode', '')
+    if post_mode == '':
+        post_mode = request.GET.get('mode', '')
+    post_priority = request.POST.get('priority', '')
+    if post_priority == '':
+        post_priority = request.GET.get('priority', '')
+    post_tel_id = request.POST.get('tel_id', '')
+    if post_tel_id == '':
+        post_tel_id = request.GET.get('tel_id', '')
+    post_user_id = request.POST.get('user_id', '')
+    if post_user_id == '':
+        post_user_id = request.GET.get('user_id', '')
+    post_start = request.POST.get('start', '')
+    if post_start == '':
+        post_start = request.GET.get('start', '')
+    post_end = request.POST.get('end', '')
+    if post_end == '':
+        post_end = request.GET.get('end', '')
+
+
+
+
+    #return HttpResponse(html_template.render(context, request))
+    return render(request, 'ui-plans.html', context)
 
 @login_required(login_url="/login/")
 def logs(request):
@@ -78,7 +114,6 @@ def logs(request):
     context['start_time'] = post_start_time
     context['end_time'] = post_end_time
     context['tel_id'] = tel_id
-
 
     now_time = datetime.utcnow().date()
 

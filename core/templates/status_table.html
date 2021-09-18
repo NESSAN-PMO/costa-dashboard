@@ -1,6 +1,20 @@
             <thead class=" text-primary">
               <th>
+                  <input type="checkbox" id="checkAll" onclick="checkAll()">
+              </th>
+              <th>
                 ID
+              </th>
+              <th>
+                RunLevel
+                <select id="runlevel" name="runlevel" style="width: 100%" onclick="check_info()">
+                    <option></option>
+                    <option value ="1"> 1 </option>
+                    <option value ="2"> 2 </option>
+                    <option value ="3"> 3 </option>
+                    <option value ="4"> 4 </option>
+                </select>
+                <!--<button type="submit" onclick="check_info()" style="width: 100%"/>-->
               </th>
               <th>
                 Heartbeat
@@ -13,9 +27,6 @@
               </th>
               <th>
                 Camera Status
-              </th>
-              <th>
-                Run Level
               </th>
               <th>
                 Free Space
@@ -43,10 +54,18 @@
               </th>
             </thead>
             <tbody>
+              <input id="id_string" name="id_string"/>
               {% for tel in tels %}
               <tr>
+                <td>
+                    <input type="checkbox" name="checkOne" value="{{tel.id}}">
+
+                </td>>
                 <td align="center">
                   {{ tel.id }}
+                </td>
+                <td align="center">
+                  {{ tel.run_level }}
                 </td>
                 <td  class="text-primary" align="center">
                   {{ tel.tmdiff }}
@@ -59,16 +78,6 @@
                 </td>
                 <td  class="text-primary" align="center">
                   <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.cam_info }}">{{ tel.cam_status }}</a>
-                </td>
-                <td align="center">
-                  <select id="run_level" style="width: 50px">
-                      <option value="0"> 0 </option>
-                      <option value="1"> 1 </option>
-                      <option value="1"> 2 </option>
-                      <option value="1"> 3 </option>
-                      <option value="1"> 4 </option>
-                      <option value="1"> 5 </option>
-                  </select>
                 </td>
                 <td align="center">
                   {{ tel.free_space|floatformat:-2 }}GB

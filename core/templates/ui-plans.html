@@ -3,7 +3,15 @@
 {% block title %} UI Tables {% endblock %}
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style type="text/css">
+.comments {
+   width:100%;
+   overflow:auto;
+   word-break:break-all;
+}
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -11,134 +19,71 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header card-header-primary">
-        <h4 class="card-title ">Simple Table</h4>
-        <p class="card-category"> Here is a subtitle for this table</p>
+        <h4 class="card-title ">Plans Table</h4>
+        <p class="card-category"> Here is the plans</p>
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table">
+
+          {% if plans %}
+          <table class="table" id="plans">
             <thead class=" text-primary">
-              <th>
-                ID
-              </th>
-              <th>
-                Name
-              </th>
-              <th>
-                Country
-              </th>
-              <th>
-                City
-              </th>
-              <th>
-                Salary
-              </th>
+              <th></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Mode</th>
+              <th>Priority</th>
+              <th>Tel_ID</th>
+              <th>User_ID</th>
+              <th>Start_Time</th>
+              <th>End_Time</th>
+              <th></th>
+              <th></th>
             </thead>
             <tbody>
+              {% for plan in plans %}
               <tr>
+                <td><button id="show_detail{{plan.id}}" class="btn btn-default" style="width:5px" value="{{plan.id}}" onclick="show_detail(this)"> + </button></td>
+                <td id="plan_id">{{ plan.id }}</td>
+                <td><a href=# title="{{plan.guide_data}}"> {{ plan.name }}</a></td>
+                <td>{{ plan.mode }}</td>
+                <td>{{ plan.priority }}</td>
+                <td>{{ plan.tel_id }}</td>
+                <td>{{ plan.user_id }}</td>
+                <td>{{ plan.start }}</td>
+                <td>{{ plan.end }}</td>
                 <td>
-                  1
+                  <button id="modify{{plan.id}}" type="button" class="btn btn-default" onclick="modify(this)">Modify</button>
                 </td>
                 <td>
-                  Dakota Rice
-                </td>
-                <td>
-                  Niger
-                </td>
-                <td>
-                  Oud-Turnhout
-                </td>
-                <td class="text-primary">
-                  $36,738
+                  <button type="button" class="btn btn-default">delete</button>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  2
-                </td>
-                <td>
-                  Minerva Hooper
-                </td>
-                <td>
-                  Curaçao
-                </td>
-                <td>
-                  Sinaai-Waas
-                </td>
-                <td class="text-primary">
-                  $23,789
-                </td>
+              <tr style="display:none;" id="guide_data{{plan.id}}">
+                <td></td>
+                <td colspan="6" align="center"><textarea rows="20" cols="23" class="comments" id="text{{plan.id}}" value="{{ plan.guide_data}}">{{plan.guide_data}}</textarea></td>
+                <td align="center"><button class="btn btn-default">submit</button></td>
               </tr>
+              {% endfor %}
+
               <tr>
-                <td>
-                  3
-                </td>
-                <td>
-                  Sage Rodriguez
-                </td>
-                <td>
-                  Netherlands
-                </td>
-                <td>
-                  Baileux
-                </td>
-                <td class="text-primary">
-                  $56,142
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  4
-                </td>
-                <td>
-                  Philip Chaney
-                </td>
-                <td>
-                  Korea, South
-                </td>
-                <td>
-                  Overland Park
-                </td>
-                <td class="text-primary">
-                  $38,735
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  5
-                </td>
-                <td>
-                  Doris Greene
-                </td>
-                <td>
-                  Malawi
-                </td>
-                <td>
-                  Feldkirchen in Kärnten
-                </td>
-                <td class="text-primary">
-                  $63,542
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  6
-                </td>
-                <td>
-                  Mason Porter
-                </td>
-                <td>
-                  Chile
-                </td>
-                <td>
-                  Gloucester
-                </td>
-                <td class="text-primary">
-                  $78,615
-                </td>
+                <td></td>
+                <td></td>
+                <td><input id="name" type="text" name="name" size="5"></td>
+                <td><input id="mode" type="text" name="mode" size="5"></td>
+                <td><input id="priority" type="text" name="priority" size="5"></td>
+                <td><input id="tel_id" type="text" name="tel_id" size="5"></td>
+                <td><input id="user_id" type="text" name="user_id" size="5"></td>
+                <td><input id="start" type="text" name="start"></td>
+                <td><input id="end" type="text" name="end"></td>
+                <td><button class="btn btn-default" type="submit">ADD</button></td>
               </tr>
             </tbody>
           </table>
+        {% else %}
+          <p>No Plans !!!</p>
+        {% endif %}
+
         </div>
       </div>
     </div>
@@ -148,4 +93,59 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<!--<script>
+
+　　function show_detail(data){
+
+　　　　var name= prompt("guide_data",data);
+       alert(name);
+    }
+
+
+</script>-->
+
+<script>
+  function show_detail(obj){
+    var guide_data = document.getElementById("guide_data".concat(obj.value))
+    //alert(guide_data)
+    if(guide_data.style.display =="none"){
+      guide_data.style.display="";
+    }
+
+    else{
+      guide_data.style.display="none";
+    }
+
+    var guide_data_text=document.getElementById("text".concat(obj.value)).value;
+    //alert(guide_data_text);
+    guide_data_text=guide_data_text.replaceAll(',',';\n');
+    document.getElementById("text".concat(obj.value)).value=guide_data_text;
+  }
+</script>
+<script>
+  function modify(obj){
+    var trobj = obj.parentNode.parentNode;
+    var tdobj = trobj.getElementsByTagName("td");
+    for(var i=2;i<tdobj.length-2;i++){
+      tdobj[i].innerHTML = "<input onblur='submit(this)' size='5' type=\"input\" value='"+tdobj[i].innerText+" '/>";
+
+    }
+  }
+
+  function submit(inputobj){
+    $.ajax(
+            {
+              url:"Add",
+              type:"post",
+              datatype:"json",
+              success:function(result){
+                  if(result!=null){
+                    inputobj.parentNode.innerText=inputobj.value;
+                    }
+                  }
+            });
+  }
+</script>
+
+{% endblock javascripts %}

@@ -6,7 +6,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-<div class="row">
+<div class="row" xmlns="http://www.w3.org/1999/html">
 
   <div class="col-md-12">
     <div class="card">
@@ -16,107 +16,118 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table" id='statusTable' width="50px">
-            <thead class=" text-primary">
-              <th>
-                ID
-              </th>
-              <th>
-                Heartbeat
-              </th>
-              <th>
-                Current Plan
-              </th>
-              <th>
-                Mount Status
-              </th>
-              <th>
-                Camera Status
-              </th>
-              <th>
-                Run Level
-              </th>
-              <th>
-                Free Space
-              </th>
-              <th>
-                RA
-              </th>
-              <th>
-                Dec
-              </th>
-              <th>
-                Target RA
-              </th>
-              <th>
-                Target Dec
-              </th>
-              <th>
-                Filter
-              </th>
-              <th>
-                Camera Temperature
-              </th>
-              <th>
-                Camera Cooler Power
-              </th>
-            </thead>
-            <tbody>
-              {% for tel in tels %}
-              <tr>
-                <td>
-                  {{tel.id}}
-                </td>
-                <td  class="text-primary" align="center">
-                  {{ tel.tmdiff }}
-                </td>
-                <td align="center">
-                  {{ tel.plan_name }}
-                </td>
-                <td  class="text-primary" align="center">
-                  <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.mount_info }}">{{ tel.mount_status }}</a>
-                </td>
-                <td  class="text-primary" align="center">
-                  <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.cam_info }}">{{ tel.cam_status }}</a>
-                </td>
-                <td align="center">
-                  <select id="run_level" style="width: 30px">
-                      <option value="0"> 0 </option>
-                      <option value="1"> 1 </option>
-                      <option value="2"> 2 </option>
-                      <option value="3"> 3 </option>
-                      <option value="4"> 4 </option>
-                      <option value="5"> 5 </option>
-                  </select>
-                </td>
-                <td align="center">
-                  {{ tel.free_space|floatformat:-2 }}GB
-                </td>
-                <td align="center">
-                  {{ tel.ra|floatformat:-3 }}h
-                </td>
-                <td align="center">
-                  {{ tel.dec|floatformat:-3 }}d
-                </td>
-                <td align="center">
-                  {{ tel.target_ra|floatformat:-3 }}h
-                </td>
-                <td align="center">
-                  {{ tel.target_dec|floatformat:-3 }}d
-                </td>
-                <td align="center">
-                  {{ tel.filter }}
-                </td>
-                <td align="center">
-                  {{ tel.ccd_temp }}
-                </td>
-                <td align="center">
-                  {{ tel.cooling_power }}%
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <form method="POST" action="">
+            {%csrf_token%}
+            <table class="table" id='statusTable' width="50px">
+              <thead class=" text-primary">
+                <th>
+                  <!--<input type="checkbox" id="checkAll" onclick="checkAll()">-->
+                </th>
+                <th>
+                  ID
+                </th>
+                <th align="center">
+                  RunLevel
+                </th>
+                <th>
+                  Heartbeat
+                </th>
+                <th>
+                  Current Plan
+                </th>
+                <th>
+                  Mount Status
+                </th>
+                <th>
+                  Camera Status
+                </th>
+                <th>
+                  Free Space
+                </th>
+                <th>
+                  RA
+                </th>
+                <th>
+                  Dec
+                </th>
+                <th>
+                  Target RA
+                </th>
+                <th>
+                  Target Dec
+                </th>
+                <th>
+                  Filter
+                </th>
+                <th>
+                  Camera Temperature
+                </th>
+                <th>
+                  Camera Cooler Power
+                </th>
+              </thead>
+              <tbody>
+                {% for tel in tels %}
+                <tr>
+                  <td align="center">
+                    <input type="checkbox" name="checkOne" value="{{tel.id}}">
+                  </td>
+                  <td align="center">
+                    {{tel.id}}
+                  </td>
+                  <td align="center">
+                    {{tel.run_level}}
+                  </td>
+                  <td  class="text-primary" align="center">
+                    {{ tel.tmdiff }}
+                  </td>
+                  <td align="center">
+                    {{ tel.plan_name }}
+                  </td>
+                  <td  class="text-primary" align="center">
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.mount_info }}">{{ tel.mount_status }}</a>
+                  </td>
+                  <td  class="text-primary" align="center">
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="{{ tel.cam_info }}">{{ tel.cam_status }}</a>
+                  </td>
+                  <td align="center">
+                    {{ tel.free_space|floatformat:-2 }}GB
+                  </td>
+                  <td align="center">
+                    {{ tel.ra|floatformat:-3 }}h
+                  </td>
+                  <td align="center">
+                    {{ tel.dec|floatformat:-3 }}d
+                  </td>
+                  <td align="center">
+                    {{ tel.target_ra|floatformat:-3 }}h
+                  </td>
+                  <td align="center">
+                    {{ tel.target_dec|floatformat:-3 }}d
+                  </td>
+                  <td align="center">
+                    {{ tel.filter }}
+                  </td>
+                  <td align="center">
+                    {{ tel.ccd_temp }}
+                  </td>
+                  <td align="center">
+                    {{ tel.cooling_power }}%
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            PLEASE CHOOSE RUNLEVEL
+            <select id="runlevel" name="runlevel" style="width: 10%" >
+                            <option></option>
+                            <option value ="1"> 1 </option>
+                            <option value ="2"> 2 </option>
+                            <option value ="3"> 3 </option>
+                            <option value ="4"> 4 </option>
+            </select>
+            <button type="submit" onclick="check_info()">Submit</button>
+          </form>
         </div>
       </div>
     </div>
@@ -145,7 +156,28 @@
                     alert("Got an error dude " + data);
                 }
             });
-        }, 5000);
+        },150000);
     });
 </script>
+
+<script>
+  function checkAll(){
+   var checkAllEle = document.getElementById("checkAll");
+   if (checkAllEle.checked == true){
+      var checkOnes = document.getElementsByName("checkOne");
+      for( var i=0; i<checkOnes.length;i++)
+      {
+       checkOnes[i].checked = true;
+      }
+   }
+   else{
+      var checkOnes = document.getElementsByName("checkOne");
+      for( var i=0; i<checkOnes.length;i++)
+      {
+       checkOnes[i].checked = false;
+      }
+   }
+  }
+</script>
+
 {% endblock javascripts %}
