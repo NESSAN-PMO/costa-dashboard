@@ -1,28 +1,35 @@
 version: '3'
 services:
-  appseed-app:
+  ches-dashboard:
+    depends_on:
+      - ches-db
+    container_name: ches-dashboard
     restart: always
     env_file: .env
     build: .
     ports:
       - "5005:5005"
     networks:
-      - db_network
-      - web_network
-  nginx:
-    restart: always
-    image: "nginx:latest"
-    ports:
-      - "85:85"
+      - ches_network
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - "./volumes/web/settings.py:/root/core/settings.py"
+  ches-db:
+    image: postgres:latest
+    container_name: ches-db
+    restart: always
+    volumes:
+      - "./volumes/pg-init-scripts:/docker-entrypoint-initdb.d"
+      - "./volumes/db/data:/var/lib/postgresql/data"
+      - "/etc/localtime:/etc/localtime"
+    environment:
+      POSTGRES_USER: chesadmin
+      POSTGRES_PASSWORD: spacedebris
+      POSTGRES_MULTIPLE_DATABASES: ches,chessite,chesweb
+    ports:
+      - "5432:5432"
     networks:
-      - web_network
-    depends_on: 
-      - appseed-app
+      - ches_network
 networks:
-  db_network:
-    driver: bridge
-  web_network:
+  ches_network:
     driver: bridge
  

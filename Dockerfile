@@ -1,14 +1,15 @@
-FROM python:3.6
+FROM python:latest
 
-COPY manage.py gunicorn-cfg.py requirements.txt .env ./
-COPY app app
-COPY authentication authentication
-COPY core core
+COPY manage.py gunicorn-cfg.py requirements.txt .env /django/
 
-RUN pip install -r requirements.txt
+RUN pip install -r /django/requirements.txt
 
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+WORKDIR /django
+COPY app /django/app
+COPY authentication /django/authentication
+COPY core /django/core
+#RUN python manage.py makemigrations
+#RUN python manage.py migrate
 
 EXPOSE 5005
 CMD ["gunicorn", "--config", "gunicorn-cfg.py", "core.wsgi"]

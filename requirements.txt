@@ -1,6 +1,7 @@
 asgiref
 autopep8
 django
+psycopg2
 pycodestyle
 pytz
 sqlparse
