@@ -52,6 +52,7 @@ class Fields(models.Model):
     last_obstel = models.IntegerField(blank=True, null=True)
     total_times = models.IntegerField(blank=True, null=True)
     history = models.CharField(max_length=1000, blank=True, null=True)
+    update = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -72,6 +73,7 @@ class Images(models.Model):
     mag_limit = models.FloatField(blank=True, null=True)
     astrometry = models.IntegerField(blank=True, null=True)
     meta = JSONFieldJSONType(blank=True, null=True)
+    update = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -107,6 +109,7 @@ class Plans(models.Model):
     datapath = models.CharField(max_length=200, blank=True, null=True)
     proposal = models.IntegerField(blank=True, null=True)
     history = models.CharField(max_length=1000, blank=True, null=True)
+    update = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False

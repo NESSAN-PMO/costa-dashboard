@@ -12,7 +12,7 @@ services:
     networks:
       - ches_network
     volumes:
-      - "./volumes/web/settings.py:/root/core/settings.py"
+      - "./volumes/web/settings.py:/django/core/settings.py:ro"
   ches-db:
     image: postgres:latest
     container_name: ches-db
