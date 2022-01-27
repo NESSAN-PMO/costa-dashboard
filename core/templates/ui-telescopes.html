@@ -8,7 +8,7 @@
 {% block content %}
 <div class="row" xmlns="http://www.w3.org/1999/html">
 
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="card">
       <div class="card-header card-header-primary">
         <h4 class="card-title ">Telescopes</h4>
@@ -16,13 +16,8 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <form method="POST" action="">
-            {%csrf_token%}
-            <table class="table" id='statusTable' width="50px">
-              <thead class=" text-primary">
-                <th>
-                  <!--<input type="checkbox" id="checkAll" onclick="checkAll()">-->
-                </th>
+            <table class="table" id='statusTable'>
+              <thead class="text-primary">
                 <th>
                   ID
                 </th>
@@ -70,9 +65,6 @@
                 {% for tel in tels %}
                 <tr>
                   <td align="center">
-                    <input type="checkbox" name="checkOne" value="{{tel.id}}">
-                  </td>
-                  <td align="center">
                     {{tel.id}}
                   </td>
                   <td align="center">
@@ -118,20 +110,64 @@
                 {% endfor %}
               </tbody>
             </table>
-            PLEASE CHOOSE RUNLEVEL
-            <select id="runlevel" name="runlevel" style="width: 10%" >
-                            <option></option>
-                            <option value ="1"> 1 </option>
-                            <option value ="2"> 2 </option>
-                            <option value ="3"> 3 </option>
-                            <option value ="4"> 4 </option>
-            </select>
-            <button type="submit" onclick="check_info()">Submit</button>
-          </form>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <h4 class="card-title ">Telescopes</h4>
+        <p class="card-category"> Telescope choose runlevel list</p>
+        <p></p>
+        <p></p>
+
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <form method="POST" action="">
+            {%csrf_token%}
+            <table class="table" id='checkTable' frame="void">
+              <thead class="text-primary">
+                <th>
+                  <p></p>
+                  <p></p>
+                  <input type="checkbox" id="checkAll" name="checkAll" onclick="checkAll()">
+                  <p></p>
+                </th>
+                <th>
+                  <p></p>
+                  <p></p>
+                  ID
+                  <p></p>
+                </th>
+              </thead>
+              <tbody>
+                {% for tel in tels %}
+                <tr>
+                  <td>
+                    <input type="checkbox" name="checkOne" value="{{tel.id}}">
+                  </td>
+                  <td>
+                    {{tel.id}}
+                  </td>
+                </tr>
+              {% endfor %}
+            </table>
+                    CHOOSE RUNLEVEL
+                    <select id="runlevel" name="runlevel" style="width: 10%" >
+                                    <option value ="1"> 1 </option>
+                                    <option value ="2"> 2 </option>
+                                    <option value ="3"> 3 </option>
+                                    <option value ="4"> 4 </option>
+                    </select>
+                    <button type="submit" onclick="check_info()">Submit</button>
+          </form>
+    </div>
+  </div>
+  </div>
+</div>
 </div>
 
 {% endblock content %}
@@ -156,28 +192,34 @@
                     alert("Got an error dude " + data);
                 }
             });
-        },150000);
+        },2000);
     });
 </script>
 
+<!--<script>
+        $(function() {
+           $("#checkAll").click(function() {
+                $('input[name="checkOne"]').attr("checked",this.checked);
+            });
+            //var $checkOne = $("input[name='checkOne']");
+            //$checkOne.click(function(){
+              //  $("#checkAll").attr("checked",$checkOne.length == $("input[name='checkOne']:checked").length ? true : false);
+           //});
+        });
+</script>-->
+
 <script>
-  function checkAll(){
-   var checkAllEle = document.getElementById("checkAll");
-   if (checkAllEle.checked == true){
-      var checkOnes = document.getElementsByName("checkOne");
-      for( var i=0; i<checkOnes.length;i++)
-      {
-       checkOnes[i].checked = true;
-      }
-   }
-   else{
-      var checkOnes = document.getElementsByName("checkOne");
-      for( var i=0; i<checkOnes.length;i++)
-      {
-       checkOnes[i].checked = false;
-      }
-   }
-  }
+  $('input[name="checkAll"]').on("click",function(){
+        if($(this).is(':checked')){
+            $('input[name="checkOne"]').each(function(){
+                $(this).prop("checked",true);
+            });
+        }else{
+            $('input[name="checkOne"]').each(function(){
+                $(this).prop("checked",false);
+            });
+        }
+    });
 </script>
 
 {% endblock javascripts %}

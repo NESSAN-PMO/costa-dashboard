@@ -1,20 +1,9 @@
-            <thead class=" text-primary">
-              <th>
-                  <input type="checkbox" id="checkAll" onclick="checkAll()">
-              </th>
+           <thead class=" text-primary">
               <th>
                 ID
               </th>
               <th>
                 RunLevel
-                <select id="runlevel" name="runlevel" style="width: 100%" onclick="check_info()">
-                    <option></option>
-                    <option value ="1"> 1 </option>
-                    <option value ="2"> 2 </option>
-                    <option value ="3"> 3 </option>
-                    <option value ="4"> 4 </option>
-                </select>
-                <!--<button type="submit" onclick="check_info()" style="width: 100%"/>-->
               </th>
               <th>
                 Heartbeat
@@ -54,13 +43,9 @@
               </th>
             </thead>
             <tbody>
-              <input id="id_string" name="id_string"/>
+              <!--<input id="id_string" name="id_string"/>-->
               {% for tel in tels %}
               <tr>
-                <td>
-                    <input type="checkbox" name="checkOne" value="{{tel.id}}">
-
-                </td>>
                 <td align="center">
                   {{ tel.id }}
                 </td>
@@ -106,3 +91,5 @@
               </tr>
               {% endfor %}
             </tbody>
+
+

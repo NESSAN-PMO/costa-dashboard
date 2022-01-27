@@ -15,19 +15,19 @@
         </a>
       </li>
       <li class="nav-item {% if 'ui-telescopes' == segment %} active {% endif %}">
-        <a class="nav-link" href="/telescopes.html">
+        <a class="nav-link" href="/ui-telescopes.html">
           <i class="material-icons">content_paste</i>
           <p>Telescopes</p>
         </a>
       </li>
       <li class="nav-item {% if 'ui-plans' == segment %} active {% endif %}">
-        <a class="nav-link" href="/plans.html">
+        <a class="nav-link" href="/ui-plans.html">
           <i class="material-icons">content_paste</i>
           <p>Plans</p>
         </a>
       </li>
       <li class="nav-item {% if 'ui-logs' == segment %} active {% endif %}">
-        <a class="nav-link" href="/logs.html">
+        <a class="nav-link" href="/ui-logs.html">
           <i class="material-icons">content_paste</i>
           <p>Logs</p>
         </a>
@@ -63,6 +63,12 @@
         </a>
       </li> -->
 
+      <li class="nav-item {% if 'socket_test' == segment %} active {% endif %}">
+        <a class="nav-link" href="/socket_test.html">
+          <i class="material-icons">content_paste</i>
+          <p>socket_test</p>
+        </a>
+      </li>
 
       <li class="nav-item ">
         <a class="nav-link" href="{% url 'logout' %}">

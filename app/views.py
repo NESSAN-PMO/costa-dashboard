@@ -16,6 +16,15 @@ import cgi,cgitb
 #from django.utils import timezone as datetime
 import json
 
+from django.shortcuts import render
+
+# Create your views here.
+
+from django.shortcuts import render
+
+@login_required(login_url="/login/")
+def chat(request):
+    return render(request, 'socket_test.html')
 
 @login_required(login_url="/login/")
 def index(request):
@@ -31,8 +40,7 @@ def index(request):
 def telescopes(request):
     context = {}
     context['segment'] = 'telescopes'
-    context['tels'] = Status.objects.using(
-        'sensors').order_by('id').all().values()
+    context['tels'] = Status.objects.using('sensors').order_by('id').all().values()
     for t in context['tels']:
         t['tmdiff'] = (datetime.utcnow() - t['heartbeat']).seconds
         t['cam_info'] = json.dumps(t['cam_info'], indent=2)
@@ -45,11 +53,13 @@ def telescopes(request):
         return JsonResponse(data)
 
     post_ids = request.POST.getlist("checkOne")
+    #print(post_ids)
 
     post_runlevel = request.POST.get('runlevel', '')
     if post_runlevel == '':
         post_runlevel = request.GET.get('runlevel', '')
 
+    #print(post_runlevel)
     for post_id in post_ids:
        Status.objects.using('sensors').filter(id=post_id).update(run_level=post_runlevel)
 
@@ -160,7 +170,7 @@ def logs(request):
     #return HttpResponse(html_template.render(context, request))
 
 
-
+'''
 @login_required(login_url="/login/")
 def pages(request):
     context = {}
@@ -183,3 +193,4 @@ def pages(request):
 
         html_template = loader.get_template('page-500.html')
         return HttpResponse(html_template.render(context, request))
+'''

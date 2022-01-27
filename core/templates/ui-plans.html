@@ -83,7 +83,24 @@
         {% else %}
           <p>No Plans !!!</p>
         {% endif %}
+          <div class="pagination">
+                <span class="step-links">
+                    {% if logs.has_previous %}
+                        <a href="?page=1&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">&laquo; first</a>
+                        <a href="?page={{ logs.previous_page_number }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">previous</a>
+                    {% endif %}
 
+                    <span class="current">
+                        Page {{ logs.number }} of {{ logs.paginator.num_pages }}.
+                    </span>
+
+                    {% if logs.has_next %}
+                        <a href="?page={{ logs.next_page_number }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">next</a>
+                        <a href="?page={{ logs.paginator.num_pages }}&start_time={{start_time}}&end_time={{end_time}}&tel_id={{tel_id}}">last &raquo;</a>
+                    {% endif %}
+
+                </span>
+          </div>
         </div>
       </div>
     </div>
